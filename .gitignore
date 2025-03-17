@@ -1,0 +1,9 @@
+# `.env` files
+.env*
+.env.example!
+
+# Virtual env dirs
+venv
+
+# DB files
+*.sqlite3

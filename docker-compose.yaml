@@ -1,0 +1,38 @@
+services:
+  be:
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - 8000:8000
+    volumes:
+      - ./backend/db.sqlite3:/app/db.sqlite3
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "8000"]
+      interval: 5s
+      timeout: 15s
+      retries: 3
+    develop:
+      watch:
+        - action: rebuild
+          path: backend/manage.py
+          target: /app/manage.py
+        - action: rebuild
+          path: backend/requirements.txt
+          target: /app/requirements.txt
+        - action: sync
+          path: backend/docusecure
+          target: /app/docusecure
+
+  # rabbitmq:
+  #   image: rabbitmq
+  #   command: rabbitmq-server
+  #   ports:
+  #     - 5672
+  #     - 15672
+  #   healthcheck:
+  #     test: ["CMD", "nc", "-z", "localhost", "5672"]
+  #     interval: 5s
+  #     timeout: 15s
+  #     retries: 3
