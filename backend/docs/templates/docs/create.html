@@ -8,18 +8,11 @@
     <link rel="stylesheet" href="{% static "css/styles.css" %}">
   </head>
   <body>
-    <h1>Secure Documents</h1>
-    <ul>
-      {% for doc in docs %}
-      <li>
-        <p>{{ doc.id }}</p>
-        <p>{{ doc.title }}</p>
-        <p>{{ doc.content }}</p>
-        <span>{{ doc.created_at }}</span>
-      </li>
-      {% endfor %}
-    </ul>
-
-    <a href="/docs/create">Add Document</a>
+    <h1>Create Secure Document</h1>
+    <form method="POST" action="/docs/create">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Submit</button>
+    </form>
   </body>
 </html>
