@@ -10,3 +10,6 @@ venv
 
 # DB files
 *.sqlite3
+
+# Node
+node_modules
