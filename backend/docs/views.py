@@ -29,14 +29,18 @@ def create(request):
     return render(request, "docs/create.html", ctx)
 
 
+
 def register(request):
     ctx = {}
     if request.method == "POST":
         form = RegisterForm(request.POST)
         if form.is_valid():
             username = form.cleaned_data.get("username")
+            email = form.cleaned_data.get("email")
             password = form.cleaned_data.get("password")
-            user = User.objects.create_user(username=username, password=password)
+            user = User.objects.create_user(
+                username=username, email=email, password=password
+            )
             login(request, user)
             return redirect("/")
         else:
