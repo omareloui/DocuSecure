@@ -3,6 +3,9 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path("", views.index),
-    path("create", views.create),
+    path("", views.index, name="docs"),
+    path("create", views.create, name="create_doc"),
+    path("register", views.register, name="register"),
+    path("login", views.login_view, name="login"),
+    path("logout", views.logout_view, name="logout"),
 ]

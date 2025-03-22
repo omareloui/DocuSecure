@@ -1,0 +1,42 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}DocuSecure{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+
+<body>
+  <nav>
+    <ul class="nav">
+      <li><a href="{% url 'docs' %}">Docs</a></li>
+    </ul>
+    <ul class="auth">
+      {% if request.user.is_authenticated %}
+      <li>
+        <form method="POST" action="{% url 'logout' %}">
+          {% csrf_token %}
+          <button type="submit">Logout</button>
+        </form>
+      </li>
+      {% else %}
+      <li>
+        <a href="{% url 'login' %}">Login</a>
+      </li>
+      <li>
+        <a href="{% url 'register' %}">Register</a>
+      </li>
+      {% endif %}
+    </ul>
+  </nav>
+
+  <h1>{% block heading %}DocuSecure{% endblock %}</h1>
+
+  {% block body %}
+  {% endblock %}
+</body>
+
+</html>

@@ -1,25 +1,25 @@
-{% load static %}
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DocuSecure</title>
-    <link rel="stylesheet" href="{% static "css/styles.css" %}">
-  </head>
-  <body>
-    <h1>Secure Documents</h1>
-    <ul>
-      {% for doc in docs %}
-      <li>
-        <p>{{ doc.id }}</p>
-        <p>{{ doc.title }}</p>
-        <p>{{ doc.content }}</p>
-        <span>{{ doc.created_at }}</span>
-      </li>
-      {% endfor %}
-    </ul>
+{% extends "snippets/layout.html" %}
 
-    <a href="/docs/create">Add Document</a>
-  </body>
-</html>
+{% block heading %}
+Secure Documents
+{% endblock %}
+
+{% block body %}
+
+{% if request.user.is_authenticated %}
+<p>Welcome, {{ request.user.username }}</p>
+{% endif %}
+
+<ul class="entries my-5">
+  {% for doc in docs %}
+  <li class="entry">
+    <p>{{ doc.id }}</p>
+    <p>{{ doc.title }}</p>
+    <p>{{ doc.content }}</p>
+    <span>{{ doc.created_at }}</span>
+  </li>
+  {% endfor %}
+</ul>
+
+<a href="{% url 'create_doc' %}">Add Document</a>
+{% endblock %}

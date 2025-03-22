@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+body {
+  max-width: 720px;
+  margin-top: 1rem;
+  margin-inline: auto;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  & ul {
+    display: flex;
+    gap: 1rem;
+  }
+}
+
+h1 {
+  @apply text-3xl mb-5 mt-3;
+}
+
+form,
+.entries {
+  display: grid;
+  gap: 1rem;
+}
+
+p label {
+  @apply mb-1 block text-sm font-medium text-gray-900;
+}
+
+p :where(input, textarea) {
+  @apply bg-gray-50 border-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:border-blue-300 block w-full p-2.5 focus:outline-none h-11;
+}
+
+p textarea {
+  @apply h-32;
+}
+
+input[type="submit"],
+button[type="submit"] {
+  @apply bg-blue-400 text-white border-2 border-blue-500 text-gray-900 rounded-lg focus:border-blue-900 block p-2.5 focus:outline-none h-11 cursor-pointer;
+}
+
+p .helptext {
+  @apply text-sm italic text-gray-700;
+}
+
+ul.errorlist li {
+  @apply text-red-500 mb-1;
+}
+
+.form-visibility-button {
+  @apply rounded-full grid place-items-center;
+
+  --size: 40px;
+  width: var(--size);
+  height: var(--size);
+}
+
+.entry {
+  @apply py-5 px-8 bg-gray-50 rounded-lg;
+}
+
+p .error {
+  @apply flex gap-1 text-red-400 mt-1 ml-2 items-center text-sm;
+}
+
+a {
+  @apply text-blue-500;
+}

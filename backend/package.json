@@ -6,7 +6,8 @@
     "doc": "docs"
   },
   "scripts": {
-    "css:generate": "npx @tailwindcss/cli -i ./assets/css/styles.css -o ./static/css/styles.css --minify"
+    "css:generate": "npx @tailwindcss/cli -i ./docs/assets/css/styles.css -o ./docs/static/css/styles.css --minify",
+    "css:watch": "npx @tailwindcss/cli -i ./docs/assets/css/styles.css -o ./docs/static/css/styles.css --minify --watch"
   },
   "author": "omareloui <contact@omareloui.com>",
   "license": "ISC",
