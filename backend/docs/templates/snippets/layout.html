@@ -17,9 +17,9 @@
     <ul class="auth">
       {% if request.user.is_authenticated %}
       <li>
-        <form method="POST" action="{% url 'logout' %}">
+        <form method="POST" action="{% url 'logout' %}" class="link">
           {% csrf_token %}
-          <button type="submit">Logout</button>
+          <button type="submit" class="text-blue-500">Logout</button>
         </form>
       </li>
       {% else %}
