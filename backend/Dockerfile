@@ -7,6 +7,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY docusecure docusecure
+COPY docs docs
 COPY manage.py .
 
 RUN python manage.py migrate

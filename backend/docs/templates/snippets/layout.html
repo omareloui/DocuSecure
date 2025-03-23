@@ -16,10 +16,15 @@
     </ul>
     <ul class="auth">
       {% if request.user.is_authenticated %}
+      {% if request.user.is_staff %}
+      <li>
+        <a href="/admin">Dashboard</a>
+      </li>
+      {% endif %}
       <li>
         <form method="POST" action="{% url 'logout' %}" class="link">
           {% csrf_token %}
-          <button type="submit" class="text-blue-500">Logout</button>
+          <button type="submit" class="text-blue-500 cursor-pointer">Logout</button>
         </form>
       </li>
       {% else %}

@@ -16,10 +16,16 @@ Secure Documents
     <p>{{ doc.id }}</p>
     <p>{{ doc.title }}</p>
     <p>{{ doc.content }}</p>
+    <p>{{ doc.owner }}</p>
+    <p><a href="{{ doc.file.url }}">{{ doc.file.name }}</a> ({{ doc.file.size|filesizeformat }})</p>
     <span>{{ doc.created_at }}</span>
   </li>
   {% endfor %}
 </ul>
 
-<a href="{% url 'create_doc' %}">Add Document</a>
+<ul>
+  <li>
+    <a href="{% url 'upload_doc' %}">Upload Document</a>
+  </li>
+</ul>
 {% endblock %}

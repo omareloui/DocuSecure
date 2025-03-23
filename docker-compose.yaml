@@ -8,11 +8,14 @@ services:
       - 8000:8000
     volumes:
       - ./backend/db.sqlite3:/app/db.sqlite3
+      - ./backend/media:/app/media
     healthcheck:
       test: ["CMD", "nc", "-z", "localhost", "8000"]
       interval: 5s
       timeout: 15s
       retries: 3
+    networks:
+      - default
     develop:
       watch:
         - action: rebuild
@@ -25,14 +28,15 @@ services:
           path: backend/docusecure
           target: /app/docusecure
 
-  # rabbitmq:
-  #   image: rabbitmq
-  #   command: rabbitmq-server
-  #   ports:
-  #     - 5672
-  #     - 15672
-  #   healthcheck:
-  #     test: ["CMD", "nc", "-z", "localhost", "5672"]
-  #     interval: 5s
-  #     timeout: 15s
-  #     retries: 3
+  elasticsearch:
+    image: elasticsearch
+    ports:
+      - 9200
+      - 9300
+    environment:
+      - discovery.type=single-node
+    networks:
+      - default
+
+networks:
+  default:

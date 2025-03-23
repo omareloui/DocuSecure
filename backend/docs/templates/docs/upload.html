@@ -1,11 +1,11 @@
 {% extends "snippets/layout.html" %}
 
 {% block heading %}
-Create Secure Document
+Upload Secure Document
 {% endblock %}
 
 {% block body %}
-<form method="POST" action="/docs/create">
+<form method="POST" action="{% url 'upload_doc' %}" enctype="multipart/form-data">
   {% csrf_token %}
   {{ form.as_p }}
   <button type="submit">Submit</button>

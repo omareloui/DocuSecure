@@ -4,10 +4,10 @@ from django.contrib.auth.models import User
 from docs.models import Doc
 
 
-class DocumentForm(forms.ModelForm):
+class UplaodDocumentForm(forms.ModelForm):
     class Meta:
         model = Doc
-        fields = ["title", "content"]
+        fields = ["file"]
 
 
 class LoginForm(forms.Form):

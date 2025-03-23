@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 
-from .form import DocumentForm, LoginForm, RegisterForm
+from .form import LoginForm, RegisterForm, UplaodDocumentForm
 from .models import Doc
 
 
@@ -14,20 +14,26 @@ def index(request):
     return render(request, "docs/index.html", ctx)
 
 
-def create(request):
+@login_required
+def upload(request):
     ctx = {}
     if request.method == "POST":
-        form = DocumentForm(request.POST)
+        doc = Doc(owner=request.user, mimetype="text/plain")
+        form = UplaodDocumentForm(
+            request.POST,
+            request.FILES,
+            instance=doc,
+        )
         if form.is_valid():
             form.save()
-            return redirect("/docs")
+            doc.set_content_from_file()
+            return redirect("/")
         else:
-            ctx["form"] = DocumentForm(request.POST)
-            return render(request, "docs/create.html", ctx)
+            ctx["form"] = UplaodDocumentForm(request.POST, request.FILES)
+            return render(request, "docs/upload.html", ctx)
 
-    ctx["form"] = DocumentForm()
-    return render(request, "docs/create.html", ctx)
-
+    ctx["form"] = UplaodDocumentForm()
+    return render(request, "docs/upload.html", ctx)
 
 
 def register(request):
