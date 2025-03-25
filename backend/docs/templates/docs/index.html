@@ -23,9 +23,11 @@ Secure Documents
   {% endfor %}
 </ul>
 
+{% if request.user.is_authenticated %}
 <ul>
   <li>
     <a href="{% url 'upload_doc' %}">Upload Document</a>
   </li>
 </ul>
+{% endif %}
 {% endblock %}
