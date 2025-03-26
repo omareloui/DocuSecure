@@ -1,15 +1,31 @@
+from logging import getLogger
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
+from elasticsearch_dsl import Q
+
+from search.documents import DocDocument
 
 from .form import LoginForm, RegisterForm, UplaodDocumentForm
 from .models import Doc
 
 
 def index(request):
-    docs = Doc.objects.all()
+    logger = getLogger("loggers")
+
+    q = request.GET.get("q")
+    msg = {"query": q}
+
+    logger.info(msg)
+
+    if q:
+        _q = Q("multi_match", query=q, fields=["content"])
+        docs = DocDocument.search().query(_q).execute()
+    else:
+        docs = Doc.objects.all()
     ctx = {"docs": docs}
     return render(request, "docs/index.html", ctx)
 
@@ -66,9 +82,7 @@ def login_view(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                next_url = (
-                    request.POST.get("next") or request.GET.get("next") or "/docs"
-                )
+                next_url = request.POST.get("next") or request.GET.get("next") or "docs"
                 return redirect(next_url)
             else:
                 ctx["error"] = "Invaid Credentials!"

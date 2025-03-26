@@ -20,14 +20,17 @@ services:
     develop:
       watch:
         - action: rebuild
-          path: backend/manage.py
-          target: /app/manage.py
-        - action: rebuild
           path: backend/requirements.txt
           target: /app/requirements.txt
         - action: sync
           path: backend/docusecure
           target: /app/docusecure
+        - action: sync
+          path: backend/docs
+          target: /app/docs
+        - action: sync
+          path: backend/search
+          target: /app/search
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.16.6
@@ -37,6 +40,8 @@ services:
       - 9300:9300
     environment:
       discovery.type: single-node
+      xpack.security.enabled: false
+      xpack.security.http.ssl.enabled: false
 
   kibana:
     image: docker.elastic.co/kibana/kibana:8.16.6

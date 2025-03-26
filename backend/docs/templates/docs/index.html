@@ -16,7 +16,7 @@ Secure Documents
     <p>{{ doc.id }}</p>
     <p>{{ doc.title }}</p>
     <p>{{ doc.content }}</p>
-    <p>{{ doc.owner }}</p>
+    <p>{{ doc.owner.username }}</p>
     <p><a href="{{ doc.file.url }}">{{ doc.file.name }}</a> ({{ doc.file.size|filesizeformat }})</p>
     <span>{{ doc.created_at }}</span>
   </li>
