@@ -22,9 +22,9 @@ Secure Documents
   <li class="entry">
     <p>{{ doc.id }}</p>
     <p>{{ doc.title }}</p>
-    <p>{{ doc.content }}</p>
+    <pre>{{ doc.content }}</pre>
     <p>{{ doc.owner.username }}</p>
-    <p><a href="{{ doc.file.url }}">{{ doc.file.name }}</a> ({{ doc.file.size|filesizeformat }})</p>
+    <p><a href="{{ doc.file.url }}">{{ doc.file.name }}</a> [{{ doc.mimetype }}] ({{ doc.file.size|filesizeformat }})</p>
     <span>{{ doc.created_at }}</span>
     {% if perms.docs.delete_doc %}
     <form method="POST" action="/{{ doc.id }}/delete">
@@ -37,7 +37,7 @@ Secure Documents
 </ul>
 {% endif %}
 
-{% if request.user.is_authenticated %}
+{% if perms.docs.add_doc %}
 <ul>
   <li>
     <a href="{% url 'upload_doc' %}">Upload Document</a>

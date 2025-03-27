@@ -6,7 +6,6 @@ from django.shortcuts import redirect, render
 from django.views.decorators.http import require_GET, require_http_methods, require_POST
 from elasticsearch_dsl import Q
 
-from docusecure import settings
 from search.documents import DocDocument
 
 from .form import SearchForm, UplaodDocumentForm
@@ -33,24 +32,34 @@ def index(request):
 @login_required()
 @permission_required("docs.add_doc", raise_exception=True)
 def upload(request):
-    ctx = {}
-    if request.method == "POST":
-        doc = Doc(owner=request.user, mimetype="text/plain")
-        form = UplaodDocumentForm(
-            request.POST,
-            request.FILES,
-            instance=doc,
-        )
-        if form.is_valid():
-            form.save()
-            doc.set_content_from_file()
-            return redirect("/")
-        else:
-            ctx["form"] = UplaodDocumentForm(request.POST, request.FILES)
-            return render(request, "docs/upload.html", ctx)
+    logger = getLogger("loggers")
 
-    ctx["form"] = UplaodDocumentForm()
-    return render(request, "docs/upload.html", ctx)
+    if request.method == "GET":
+        return render(request, "docs/upload.html", {"form": UplaodDocumentForm()})
+
+    mimetype = request.FILES.get("file").content_type
+
+    doc = Doc(owner=request.user, mimetype=mimetype)
+
+    logger.info(
+        {"message": "Creating a new document", "doc": doc, "mimetype": mimetype}
+    )
+
+    form = UplaodDocumentForm(
+        request.POST,
+        request.FILES,
+        instance=doc,
+    )
+    if form.is_valid():
+        form.save()
+        doc.set_content_from_file()
+        return redirect("/")
+
+    return render(
+        request,
+        "docs/upload.html",
+        {"form": UplaodDocumentForm(request.POST, request.FILES)},
+    )
 
 
 @require_POST
