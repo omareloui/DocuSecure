@@ -1,4 +1,4 @@
 # DocuSecure
 
-- **[Requirments](TASK.md)**
-- **[TODO](TODO.md)**
+- **[docs/Requirments](TASK.md)**
+- **[docs/TODO](TODO.md)**

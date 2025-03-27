@@ -1,17 +1,16 @@
 # TODO
 
 - [x] Authentication
-- [ ] Authorization
+- [x] Authorization
 - [x] Store the docs
 - [x] Process docs
 - [x] ElasticSearch
 - [x] Logs and Filebeat
 - [x] CRUD
-- [ ] [Required endpoints](TASK.md#external-api-documentation)
-- [ ] PKI
 - [ ] Bulk upload => multithreading
 - [ ] Documentation
-- [ ] Unit test
+- [ ] [Required endpoints](TASK.md#external-api-documentation)
+- [ ] PKI
 
 ## Nice-To-Haves
 
@@ -19,6 +18,7 @@
 - [ ] More file parsers for more mimetypes
 - [ ] Refactor the code
 - [ ] Store the file metadata in ES to view (link, size, and date)
+- [ ] Unit test
 
 ## Performance Improvements
 
