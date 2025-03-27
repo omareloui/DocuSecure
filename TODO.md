@@ -7,7 +7,7 @@
 - [x] ElasticSearch
 - [x] Logs and Filebeat
 - [x] CRUD
-- [ ] [Required endpoits](TASK.md#external-api-documentation)
+- [ ] [Required endpoints](TASK.md#external-api-documentation)
 - [ ] PKI
 - [ ] Bulk upload => multithreading
 - [ ] Documentation
