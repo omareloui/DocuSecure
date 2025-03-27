@@ -17,6 +17,8 @@
 - [ ] Pagination
 - [ ] More file parsers for more mimetypes
 - [ ] Refactor the code
+  - [ ] add more logs
+  - [x] move auth to a new app
 - [ ] Store the file metadata in ES to view (link, size, and date)
 - [ ] Unit test
 

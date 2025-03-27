@@ -27,6 +27,9 @@ services:
           path: backend/docusecure
           target: /app/docusecure
         - action: sync
+          path: backend/templates
+          target: /app/templates
+        - action: sync
           path: backend/docs
           target: /app/docs
         - action: sync

@@ -8,7 +8,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY docusecure docusecure
 COPY docs docs
+COPY accounts accounts
 COPY search search
+COPY templates templates
 COPY manage.py .
 
 COPY logs logs

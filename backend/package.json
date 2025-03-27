@@ -2,14 +2,11 @@
   "name": "docusecure",
   "version": "1.0.0",
   "main": "main.js",
-  "directories": {
-    "doc": "docs"
-  },
   "scripts": {
-    "css:generate": "npx @tailwindcss/cli -i ./docs/assets/css/styles.css -o ./docs/static/css/styles.css --minify",
-    "css:watch": "npx @tailwindcss/cli -i ./docs/assets/css/styles.css -o ./docs/static/css/styles.css --minify --watch"
+    "css:generate": "npx @tailwindcss/cli -i ./assets/css/styles.css -o ./static/css/styles.css --minify",
+    "css:watch": "npx @tailwindcss/cli -i ./assets/css/styles.css -o ./static/css/styles.css --minify --watch"
   },
-  "author": "omareloui <contact@omareloui.com>",
+  "author": "Omar Eloui <contact@omareloui.com>",
   "license": "ISC",
   "description": "",
   "devDependencies": {
