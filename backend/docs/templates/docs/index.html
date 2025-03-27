@@ -10,6 +10,13 @@ Secure Documents
 <p>Welcome, {{ request.user.username }}</p>
 {% endif %}
 
+{% if docs|length or q %}
+<form method="GET" action="{% url 'docs' %}" class="mt-4">
+  {{ search_form.as_p }}
+</form>
+{% endif %}
+
+{% if docs|length %}
 <ul class="entries my-5">
   {% for doc in docs %}
   <li class="entry">
@@ -22,6 +29,7 @@ Secure Documents
   </li>
   {% endfor %}
 </ul>
+{% endif %}
 
 {% if request.user.is_authenticated %}
 <ul>

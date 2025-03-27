@@ -9,7 +9,7 @@ from elasticsearch_dsl import Q
 
 from search.documents import DocDocument
 
-from .form import LoginForm, RegisterForm, UplaodDocumentForm
+from .form import LoginForm, RegisterForm, SearchForm, UplaodDocumentForm
 from .models import Doc
 
 
@@ -22,11 +22,11 @@ def index(request):
     logger.info(msg)
 
     if q:
-        _q = Q("multi_match", query=q, fields=["content"])
+        _q = Q("fuzzy", content={"value": q, "fuzziness": 1})
         docs = DocDocument.search().query(_q).execute()
     else:
         docs = Doc.objects.all()
-    ctx = {"docs": docs}
+    ctx = {"docs": docs, "q": q, "search_form": SearchForm(request.GET)}
     return render(request, "docs/index.html", ctx)
 
 
