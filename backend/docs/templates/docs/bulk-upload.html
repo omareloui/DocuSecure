@@ -1,0 +1,13 @@
+{% extends "layouts/layout.html" %}
+
+{% block heading %}
+Bulk Upload Secure Document
+{% endblock %}
+
+{% block body %}
+<form method="POST" action="{% url 'bulk_upload_doc' %}" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Submit</button>
+</form>
+{% endblock %}

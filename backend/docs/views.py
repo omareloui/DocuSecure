@@ -8,7 +8,7 @@ from elasticsearch_dsl import Q
 
 from search.documents import DocDocument
 
-from .form import SearchForm, UplaodDocumentForm
+from .form import BulkUpload, SearchForm, UplaodDocumentForm
 from .models import Doc
 
 
@@ -50,16 +50,43 @@ def upload(request):
         request.FILES,
         instance=doc,
     )
-    if form.is_valid():
-        form.save()
-        doc.set_content_from_file()
-        return redirect("/")
+    if not form.is_valid():
+        return render(
+            request,
+            "docs/upload.html",
+            {"form": form},
+        )
 
-    return render(
-        request,
-        "docs/upload.html",
-        {"form": UplaodDocumentForm(request.POST, request.FILES)},
-    )
+    form.save()
+    doc.set_content_from_file()
+    return redirect("/")
+
+
+@require_http_methods(["GET", "POST"])
+@login_required()
+@permission_required("docs.add_doc", raise_exception=True)
+def bulk_upload(request):
+    logger = getLogger("loggers")
+
+    if request.method == "GET":
+        return render(request, "docs/bulk-upload.html", {"form": BulkUpload()})
+
+    form = BulkUpload(request.POST, request.FILES)
+
+    if not form.is_valid():
+        logger.info({"message": "Error validating the form"})
+        return render(request, "docs/bulk-upload.html", {"form": form})
+
+    files = form.cleaned_data["files"]
+
+    logger.info({"files_count": len(files)})
+
+    for f in files:
+        doc = Doc(file=f, owner=request.user, mimetype=f.content_type)
+        doc.save()
+        doc.set_content_from_file()
+
+    return redirect("/")
 
 
 @require_POST
