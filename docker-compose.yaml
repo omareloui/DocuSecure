@@ -39,6 +39,8 @@ services:
     ports:
       - 9200:9200
       - 9300:9300
+    volumes:
+      - es:/usr/share/elasticsearch/data
     environment:
       discovery.type: single-node
       xpack.security.enabled: false
@@ -70,3 +72,6 @@ services:
 networks:
   default:
     driver: bridge
+
+volumes:
+  es:
