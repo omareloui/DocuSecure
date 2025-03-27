@@ -11,6 +11,7 @@ COPY docs docs
 COPY accounts accounts
 COPY search search
 COPY templates templates
+COPY static static
 COPY manage.py .
 
 COPY logs logs

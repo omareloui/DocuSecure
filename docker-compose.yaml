@@ -30,6 +30,9 @@ services:
           path: backend/templates
           target: /app/templates
         - action: sync
+          path: backend/static
+          target: /app/static
+        - action: sync
           path: backend/docs
           target: /app/docs
         - action: sync
