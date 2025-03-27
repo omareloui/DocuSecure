@@ -28,4 +28,6 @@ class DocDocument(Document):
             "content",
             "file",
             "mimetype",
+            "created_at",
+            "updated_at",
         ]

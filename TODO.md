@@ -18,6 +18,7 @@
 - [ ] Pagination
 - [ ] More file parsers for more mimetypes
 - [ ] Refactor the code
+- [ ] Store the file metadata in ES to view (link, size, and date)
 
 ## Performance Improvements
 
