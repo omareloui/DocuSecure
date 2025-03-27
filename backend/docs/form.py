@@ -28,6 +28,7 @@ class UplaodDocumentForm(forms.ModelForm):
 class LoginForm(forms.Form):
     username = forms.CharField(min_length=2)
     password = forms.CharField(widget=forms.PasswordInput)
+    next = forms.CharField(required=False, widget=forms.HiddenInput)
 
 
 class RegisterForm(forms.ModelForm):
