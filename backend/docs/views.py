@@ -14,18 +14,16 @@ from .models import Doc
 
 
 def index(request):
-    logger = getLogger("loggers")
-
     q = request.GET.get("q")
-    msg = {"query": q}
 
-    logger.info(msg)
+    logger = getLogger("signal")
 
     if q:
         _q = Q("fuzzy", content={"value": q, "fuzziness": 1})
         docs = DocDocument.search().query(_q).execute()
     else:
         docs = Doc.objects.all()
+    logger.info({"query": q, "docs_count": len(docs)})
     ctx = {"docs": docs, "q": q, "search_form": SearchForm(request.GET)}
     return render(request, "docs/index.html", ctx)
 

@@ -11,6 +11,8 @@ COPY docs docs
 COPY search search
 COPY manage.py .
 
+COPY logs logs
+
 RUN python manage.py migrate
 
 EXPOSE 8000

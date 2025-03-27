@@ -10,6 +10,7 @@ services:
     volumes:
       - ./backend/db.sqlite3:/app/db.sqlite3
       - ./backend/media:/app/media
+      - ./backend/logs:/app/logs
     healthcheck:
       test: ["CMD", "nc", "-z", "localhost", "8000"]
       interval: 5s
@@ -53,17 +54,18 @@ services:
     profiles:
       - efk
 
-  # filebeat:
-  #   image: docker.elastic.co/beats/filebeat:7.8.0
-  #   # volumes:
-  #   #   - /path-to-filebeat.yml/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
-  #   #   - /path-to-logs-directory/logs:/usr/share/filebeat/logs
-  #   environment:
-  #     ELASTICSEARCH_URL: http://elasticsearch:9200
-  #   depends_on:
-  #     - elasticsearch
-  #   profiles:
-  #     - efk
+  filebeat:
+    container_name: filebeat
+    image: docker.elastic.co/beats/filebeat:8.16.6
+    volumes:
+      - ./filebeat.yaml:/usr/share/filebeat/filebeat.yml:ro
+      - ./backend/logs:/usr/share/filebeat/logs
+    environment:
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+    depends_on:
+      - elasticsearch
+    profiles:
+      - efk
 
 networks:
   default:

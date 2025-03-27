@@ -2,8 +2,9 @@
 
 body {
   max-width: 720px;
-  margin-top: 1rem;
+  margin-block: 1rem;
   margin-inline: auto;
+  padding: 0px 20px;
 }
 
 nav {

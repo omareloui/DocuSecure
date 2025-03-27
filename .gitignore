@@ -14,5 +14,6 @@ venv
 # Node
 node_modules
 
-# User input
+# User input and logs
 backend/media
+backend/logs
