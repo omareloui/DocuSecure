@@ -1,10 +1,10 @@
 from logging import getLogger
 
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
+from django.views.decorators.http import require_GET, require_http_methods, require_POST
 from elasticsearch_dsl import Q
 
 from search.documents import DocDocument
@@ -13,10 +13,11 @@ from .form import LoginForm, RegisterForm, SearchForm, UplaodDocumentForm
 from .models import Doc
 
 
+@require_GET
 def index(request):
     q = request.GET.get("q")
 
-    logger = getLogger("signal")
+    logger = getLogger("loggers")
 
     if q:
         _q = Q("fuzzy", content={"value": q, "fuzziness": 1})
@@ -28,7 +29,9 @@ def index(request):
     return render(request, "docs/index.html", ctx)
 
 
-@login_required
+@require_http_methods(["GET", "POST"])
+@login_required()
+@permission_required("docs.add_doc", raise_exception=True)
 def upload(request):
     ctx = {}
     if request.method == "POST":
@@ -50,6 +53,7 @@ def upload(request):
     return render(request, "docs/upload.html", ctx)
 
 
+@require_http_methods(["GET", "POST"])
 def register(request):
     ctx = {}
     if request.method == "POST":
@@ -70,7 +74,9 @@ def register(request):
     return render(request, "auth/register.html", ctx)
 
 
+@require_http_methods(["GET", "POST"])
 def login_view(request):
+    next_url = request.POST.get("next") or request.GET.get("next") or "docs"
     ctx = {}
     if request.method == "POST":
         form = LoginForm(request.POST)
@@ -80,17 +86,17 @@ def login_view(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                next_url = request.POST.get("next") or request.GET.get("next") or "docs"
                 return redirect(next_url)
             else:
                 ctx["error"] = "Invaid Credentials!"
                 ctx["form"] = form
                 return render(request, "auth/login.html", ctx)
 
-    ctx["form"] = LoginForm()
+    ctx["form"] = LoginForm(initial={"next": next_url})
     return render(request, "auth/login.html", ctx)
 
 
+@require_POST
 def logout_view(request):
     if request.method == "POST":
         logout(request)
