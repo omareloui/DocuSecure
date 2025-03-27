@@ -43,7 +43,7 @@ p textarea {
 }
 
 form:not(.link) :where(input[type="submit"], button[type="submit"]) {
-  @apply bg-blue-400 text-white border-2 border-blue-500 text-gray-900 rounded-lg focus:border-blue-900 block p-2.5 focus:outline-none h-11 cursor-pointer;
+  @apply bg-blue-400 text-white border-2 border-blue-500 text-gray-900 rounded-lg focus:border-blue-900 block p-2.5 focus:outline-none cursor-pointer;
 }
 
 p .helptext {

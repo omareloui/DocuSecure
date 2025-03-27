@@ -1,10 +1,12 @@
+import os
 from logging import getLogger
 
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import redirect, render
-from django.views.decorators.http import require_GET, require_http_methods
+from django.views.decorators.http import require_GET, require_http_methods, require_POST
 from elasticsearch_dsl import Q
 
+from docusecure import settings
 from search.documents import DocDocument
 
 from .form import SearchForm, UplaodDocumentForm
@@ -49,3 +51,25 @@ def upload(request):
 
     ctx["form"] = UplaodDocumentForm()
     return render(request, "docs/upload.html", ctx)
+
+
+@require_POST
+@login_required()
+@permission_required("docs.delete_doc", raise_exception=True)
+def delete(request, id):
+    logger = getLogger("loggers")
+    doc = Doc.objects.get(id=id)
+    logger.info(
+        {"id": id, "action": "DELETE", "subject": "docs", "doc": doc, "file": doc.file}
+    )
+
+    _path = doc.file.path
+
+    try:
+        os.unlink(_path)
+    except FileNotFoundError:
+        logger.warning({"message": "Couldn't find file to delete", "path": _path})
+        pass
+
+    doc.delete()
+    return redirect("docs")

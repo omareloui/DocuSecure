@@ -26,6 +26,12 @@ Secure Documents
     <p>{{ doc.owner.username }}</p>
     <p><a href="{{ doc.file.url }}">{{ doc.file.name }}</a> ({{ doc.file.size|filesizeformat }})</p>
     <span>{{ doc.created_at }}</span>
+    {% if perms.docs.delete_doc %}
+    <form method="POST" action="/{{ doc.id }}/delete">
+      {% csrf_token %}
+      <button type="submit" class="mt-2 w-32 !bg-pink-400 !border-pink-500">Delete</button>
+    </form>
+    {% endif %}
   </li>
   {% endfor %}
 </ul>
