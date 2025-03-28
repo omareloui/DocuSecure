@@ -47,7 +47,6 @@ class Doc(BaseModel):
     def set_file_metadata(self):
         self.path = self.file.path
         self.url = self.file.url
-        self.save()
 
     def set_content_from_file(self):
         if not self._parser:
@@ -55,7 +54,6 @@ class Doc(BaseModel):
 
         dir = f"{settings.MEDIA_ROOT}"
         self.content = self._parser.parse(f"{dir}/{self.file.name}")
-        self.save()
 
     def __str__(self):
         return f"[{self.id}] <{self.mimetype}> {self.content}"

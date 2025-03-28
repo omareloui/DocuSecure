@@ -108,3 +108,4 @@ def save_file(file, user):
     doc.save()
     doc.set_file_metadata()
     doc.set_content_from_file()
+    doc.save()
