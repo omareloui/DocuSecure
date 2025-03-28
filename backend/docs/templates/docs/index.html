@@ -24,7 +24,7 @@ Secure Documents
     <p>{{ doc.title }}</p>
     <pre>{{ doc.content }}</pre>
     <p>{{ doc.owner.username }}</p>
-    <p><a href="{{ doc.file.url }}">{{ doc.file.name }}</a> [{{ doc.mimetype }}] ({{ doc.file.size|filesizeformat }})</p>
+    <p><a href="{{ doc.url }}">{{ doc.filename }}</a> [{{ doc.mimetype }}] ({{ doc.size|filesizeformat }})</p>
     <span>{{ doc.created_at }}</span>
     {% if perms.docs.delete_doc %}
     <form method="POST" action="/{{ doc.id }}/delete">
