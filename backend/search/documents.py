@@ -28,6 +28,11 @@ class DocDocument(Document):
             "content",
             "file",
             "mimetype",
+            "size",
+            "path",
+            "url",
+            "keywords",
+            "filename",
             "created_at",
             "updated_at",
         ]
