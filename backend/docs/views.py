@@ -1,4 +1,5 @@
 import os
+from concurrent.futures import ThreadPoolExecutor
 from logging import getLogger
 
 from django.contrib.auth.decorators import login_required, permission_required
@@ -71,8 +72,14 @@ def bulk_upload(request):
 
     logger.info({"files_count": len(files)})
 
-    for f in files:
-        save_file(f, request.user)
+    with ThreadPoolExecutor(max_workers=len(files)) as executor:
+        for f in files:
+            executor.submit(save_file, f, request.user)
+    # pool = ThreadPoolExecutor(max_workers=len(files))
+    # for f in files:
+    #     pool.submit(save_file, f, request.user)
+
+    # pool.shutdown(wait=True)
 
     return redirect("/")
 
@@ -98,6 +105,8 @@ def delete(request, id):
 
 
 def save_file(file, user):
+    logger = getLogger("loggers")
+    logger.info({"message": "saving the document", "file": file})
     doc = Doc(
         file=file,
         filename=file.name,
