@@ -36,8 +36,14 @@ services:
           path: backend/docs
           target: /app/docs
         - action: sync
+          path: backend/accounts
+          target: /app/accounts
+        - action: sync
           path: backend/search
           target: /app/search
+        - action: sync
+          path: backend/extapi
+          target: /app/extapi
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.16.6

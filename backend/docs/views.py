@@ -97,7 +97,7 @@ def delete(request, id):
     try:
         os.unlink(doc.path)
     except FileNotFoundError:
-        logger.warning({"message": "Couldn't find file to delete", "path": _path})
+        logger.warning({"message": "Couldn't find file to delete", "path": doc.path})
         pass
 
     doc.delete()
@@ -118,3 +118,4 @@ def save_file(file, user):
     doc.set_file_metadata()
     doc.set_content_from_file()
     doc.save()
+    return doc

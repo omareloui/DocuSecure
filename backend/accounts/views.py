@@ -1,11 +1,13 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
+from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods, require_POST
 
 from accounts.forms import LoginForm, RegisterForm
 
 
+@csrf_exempt
 @require_http_methods(["GET", "POST"])
 def register(request):
     ctx = {}
@@ -27,6 +29,7 @@ def register(request):
     return render(request, "accounts/register.html", ctx)
 
 
+@csrf_exempt
 @require_http_methods(["GET", "POST"])
 def login_view(request):
     next_url = request.POST.get("next") or request.GET.get("next") or "docs"

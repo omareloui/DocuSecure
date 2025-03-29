@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "docs.apps.DocsConfig",
     "search.apps.SearchConfig",
     "accounts.apps.AccountsConfig",
+    "extapi.apps.ExtapiConfig",
 ]
 
 MIDDLEWARE = [

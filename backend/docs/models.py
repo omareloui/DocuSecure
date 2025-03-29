@@ -44,6 +44,15 @@ class Doc(BaseModel):
 
     _parser = None
 
+    def get_metadata(self):
+        return {
+            "document_id": self.id,
+            "title": self.filename,
+            "author": self.owner.username,
+            "date_created": self.created_at,
+            "keywords": self.keywords and self.keywords.split(","),
+        }
+
     def set_file_metadata(self):
         self.path = self.file.path
         self.url = self.file.url
@@ -54,6 +63,7 @@ class Doc(BaseModel):
 
         dir = f"{settings.MEDIA_ROOT}"
         self.content = self._parser.parse(f"{dir}/{self.file.name}")
+        self.status = self.DocStatus.PARSED
 
     def __str__(self):
         return f"[{self.id}] <{self.mimetype}> {self.content}"

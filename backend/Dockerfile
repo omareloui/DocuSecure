@@ -10,6 +10,7 @@ COPY docusecure docusecure
 COPY docs docs
 COPY accounts accounts
 COPY search search
+COPY extapi extapi
 COPY templates templates
 COPY static static
 COPY manage.py .
