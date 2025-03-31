@@ -1,10 +1,21 @@
 from abc import abstractmethod
 
+from pypdf import PdfReader
+
 
 class IParser:
     @abstractmethod
     def parse(self, path):
         raise NotImplementedError
+
+
+class PdfParser(IParser):
+    def parse(self, path):
+        reader = PdfReader(path)
+        text = ""
+        for p in reader.pages:
+            text += p.extract_text()
+        return text
 
 
 class TextParser(IParser):
@@ -27,6 +38,8 @@ class FileParser:
 
 def get_parser_from_mimetype(mimetype):
     match mimetype:
+        case "application/pdf":
+            return PdfParser()
         case "application/json" | "text/plain" | "text/csv":
             return TextParser()
         case _:

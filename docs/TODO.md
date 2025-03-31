@@ -15,8 +15,9 @@
 
 ## Nice-To-Haves
 
-- [ ] More file parsers for more mimetypes
+- [x] More file parsers for more mimetypes
 - [ ] Store the secrets in a .env file
+- [ ] Don't depend on the content type for the file mimetype
 - [ ] Serve the files from Caddy
 - [ ] Pagination
 - [ ] Generate keywords from document content
