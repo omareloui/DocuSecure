@@ -11,7 +11,7 @@
 - [x] [Required endpoints](TASK.md#external-api-documentation)
 - [?] PKI
 - [x] Documentation
-- [ ] Unit test
+- [x] Unit test
 
 ## Nice-To-Haves
 

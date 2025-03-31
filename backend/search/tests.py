@@ -5,7 +5,7 @@ from elasticsearch_dsl import Q
 from search.documents import DocDocument
 
 
-class DocTestCase(TestCase):
+class SearchTestCase(TestCase):
     def setUp(self):
         self.c = Client()
 
