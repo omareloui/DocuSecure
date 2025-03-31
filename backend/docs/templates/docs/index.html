@@ -21,8 +21,10 @@ Secure Documents
   {% for doc in docs %}
   <li class="entry">
     <p>{{ doc.id }}</p>
-    <pre>{{ doc.content }}</pre>
-    <p>{{ doc.owner.username }}</p>
+    {% if doc.content %}
+    <pre class="bg-gray-200 p-2 rounded overflow-x-auto w-2xl my-2">{{ doc.content }}</pre>
+    {% endif %}
+    <p class="italic text-gray-800">{{ doc.owner.username }}</p>
     <p><a href="{{ doc.url }}">{{ doc.filename }}</a> [{{ doc.mimetype }}] ({{ doc.size|filesizeformat }})</p>
     <span>{{ doc.created_at }}</span>
     {% if perms.docs.delete_doc %}
