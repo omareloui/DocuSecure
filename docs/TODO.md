@@ -17,8 +17,9 @@
 
 - [x] More file parsers for more mimetypes
 - [x] Store the secrets in a .env file
-- [ ] Don't depend on the content-type for the file mimetype
+- [x] Don't depend on the content-type for the file mimetype
 - [ ] Serve the files from Caddy
+- [ ] On invalid mimetypes the file is stored anyway
 - [x] Refactor the code
   - [x] add more logs
   - [x] move auth to a new app

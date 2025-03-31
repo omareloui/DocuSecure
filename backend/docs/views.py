@@ -6,7 +6,6 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_GET, require_http_methods, require_POST
 from elasticsearch_dsl import Q
-
 from search.documents import DocDocument
 
 from .form import BulkUpload, SearchForm, UplaodDocumentForm
@@ -75,11 +74,6 @@ def bulk_upload(request):
     with ThreadPoolExecutor(max_workers=len(files)) as executor:
         for f in files:
             executor.submit(save_file, f, request.user)
-    # pool = ThreadPoolExecutor(max_workers=len(files))
-    # for f in files:
-    #     pool.submit(save_file, f, request.user)
-
-    # pool.shutdown(wait=True)
 
     return redirect("/")
 

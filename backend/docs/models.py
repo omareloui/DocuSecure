@@ -1,3 +1,4 @@
+import magic
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
@@ -56,6 +57,7 @@ class Doc(BaseModel):
     def set_file_metadata(self):
         self.path = self.file.path
         self.url = self.file.url
+        self.mimetype = magic.from_file(self.path, mime=True)
 
     def set_content_from_file(self):
         if not self._parser:
