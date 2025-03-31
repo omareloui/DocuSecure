@@ -30,6 +30,14 @@ First you'll need to clone the repository
 git clone git@github.com:omareloui/DocuSecure
 ```
 
+Setup envvariables
+
+```bash
+cp backend/.env.example backend/.env
+```
+
+And make sure to update the variables
+
 ### Setup the Database
 
 Then, you'll need to setup the DB. We're using `sqlite3`

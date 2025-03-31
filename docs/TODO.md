@@ -16,12 +16,9 @@
 ## Nice-To-Haves
 
 - [x] More file parsers for more mimetypes
-- [ ] Store the secrets in a .env file
-- [ ] Don't depend on the content type for the file mimetype
+- [x] Store the secrets in a .env file
+- [ ] Don't depend on the content-type for the file mimetype
 - [ ] Serve the files from Caddy
-- [ ] Pagination
-- [ ] Generate keywords from document content
-- [ ] Classify the docs from document content
 - [x] Refactor the code
   - [x] add more logs
   - [x] move auth to a new app
