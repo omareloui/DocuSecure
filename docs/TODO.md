@@ -10,16 +10,17 @@
 - [x] Bulk upload => multithreading
 - [x] [Required endpoints](TASK.md#external-api-documentation)
 - [?] PKI
-- [ ] Documentation
+- [x] Documentation
 - [ ] Unit test
 
 ## Nice-To-Haves
 
-- [ ] Classify the docs from document content
-- [ ] Generate keywords from document content
-- [ ] Pagination
 - [ ] More file parsers for more mimetypes
 - [ ] Store the secrets in a .env file
+- [ ] Serve the files from Caddy
+- [ ] Pagination
+- [ ] Generate keywords from document content
+- [ ] Classify the docs from document content
 - [x] Refactor the code
   - [x] add more logs
   - [x] move auth to a new app
