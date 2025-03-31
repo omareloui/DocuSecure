@@ -73,6 +73,7 @@ services:
       - elasticsearch
     profiles:
       - efk
+      - all
 
   filebeat:
     container_name: filebeat
@@ -88,6 +89,7 @@ services:
       - elasticsearch
     profiles:
       - efk
+      - all
 
   traefik:
     image: traefik:v3.3.4
@@ -150,6 +152,7 @@ services:
       - docusecure
     profiles:
       - caddy
+      - all
 
 networks:
   docusecure:
