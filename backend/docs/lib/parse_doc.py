@@ -52,7 +52,7 @@ def get_parser_from_mimetype(mimetype):
             return WordParser()
         case "application/pdf":
             return PdfParser()
-        case "application/json" | "text/plain" | "text/csv":
+        case "application/json" | "text/plain" | "text/csv" | "text/x-script.python":
             return TextParser()
         case _:
             raise Exception(f'"{mimetype}" is not supported mimetype.')
