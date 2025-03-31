@@ -1,5 +1,6 @@
 from abc import abstractmethod
 
+import docx
 from pypdf import PdfReader
 
 
@@ -16,6 +17,15 @@ class PdfParser(IParser):
         for p in reader.pages:
             text += p.extract_text()
         return text
+
+
+class WordParser(IParser):
+    def parse(self, path):
+        doc = docx.Document(path)
+        fullText = []
+        for para in doc.paragraphs:
+            fullText.append(para.text)
+        return "\n".join(fullText)
 
 
 class TextParser(IParser):
@@ -38,9 +48,11 @@ class FileParser:
 
 def get_parser_from_mimetype(mimetype):
     match mimetype:
+        case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+            return WordParser()
         case "application/pdf":
             return PdfParser()
         case "application/json" | "text/plain" | "text/csv":
             return TextParser()
         case _:
-            raise Exception("Not supported mimetype.")
+            raise Exception(f'"{mimetype}" is not supported mimetype.')
