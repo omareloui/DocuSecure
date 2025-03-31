@@ -79,8 +79,7 @@ class Doc(BaseModel):
         if not self._parser:
             self._parser = FileParser(get_parser_from_mimetype(self.mimetype))
 
-        dir = f"{settings.MEDIA_ROOT}"
-        self.content = self._parser.parse(f"{dir}/{self.file.name}")
+        self.content = self._parser.parse(f"{settings.MEDIA_ROOT}/{self.file.name}")
         self.status = self.DocStatus.PARSED
 
     def __str__(self):

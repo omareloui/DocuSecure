@@ -20,6 +20,8 @@
 - [x] Don't depend on the content-type for the file mimetype
 - [ ] Serve the files from Caddy
 - [ ] On invalid mimetypes the file is stored anyway
+- [ ] Categories the document
+- [ ] Generate keywords from document
 - [x] Refactor the code
   - [x] add more logs
   - [x] move auth to a new app
