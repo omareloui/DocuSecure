@@ -1,0 +1,4 @@
+:80 {
+  reverse_proxy be:8000
+  tls internal
+}

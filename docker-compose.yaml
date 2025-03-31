@@ -18,6 +18,8 @@ services:
       retries: 3
     depends_on:
       - elasticsearch
+    networks:
+      - docusecure
     develop:
       watch:
         - action: rebuild
@@ -53,6 +55,8 @@ services:
       - 9300:9300
     volumes:
       - es:/usr/share/elasticsearch/data
+    networks:
+      - docusecure
     environment:
       discovery.type: single-node
       xpack.security.enabled: false
@@ -63,6 +67,8 @@ services:
     container_name: kibana
     ports:
       - 5601:5601
+    networks:
+      - docusecure
     depends_on:
       - elasticsearch
     profiles:
@@ -74,6 +80,8 @@ services:
     volumes:
       - ./filebeat.yaml:/usr/share/filebeat/filebeat.yml:ro
       - ./backend/logs:/usr/share/filebeat/logs
+    networks:
+      - docusecure
     environment:
       ELASTICSEARCH_URL: http://elasticsearch:9200
     depends_on:
@@ -81,9 +89,75 @@ services:
     profiles:
       - efk
 
+  traefik:
+    image: traefik:v3.3.4
+    container_name: traefik
+    # security_opt:
+    #   - no-new-privileges:true
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - letsencrypt:/letsencrypt
+      # - ./traefik.yaml:/etc/treafik.yaml:ro
+    ports:
+      - 80:80
+      - 443:443
+      - 8080:8080
+    profiles:
+      - treafik
+    networks:
+      - docusecure
+    command:
+      - --api.dashboard=true
+      - --log.level=DEBUG
+      #- --log.filepath=/var/log/traefik.log
+      - --accesslog=true
+      #- --accesslog.filepath=/var/log/traefik-access.log
+      - --providers.docker.network=docusecure
+      - --providers.docker.exposedByDefault=false
+      - --entrypoints.web.address=:80
+      - --entrypoints.web.http.redirections.entrypoint.to=websecure
+      - --entryPoints.web.http.redirections.entrypoint.scheme=https
+      - --entrypoints.websecure.address=:443
+      # remove next line when using Traefik v2
+      - --entrypoints.websecure.asDefault=true
+      - --entrypoints.websecure.http.tls.certresolver=myresolver
+      - --certificatesresolvers.myresolver.acme.email=contact@omareloui.com
+      - --certificatesresolvers.myresolver.acme.tlschallenge=true
+      - --certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.mydashboard.rule=Host(`traefik.localhost`)
+      - traefik.http.routers.mydashboard.service=api@internal
+      - traefik.http.routers.mydashboard.middlewares=myauth
+      - traefik.http.middlewares.myauth.basicauth.users=test:$$apr1$$H6uskkkW$$IgXLP6ewTrSuBkTrqE8wj/
+
+  caddy:
+    image: caddy:2.9.1
+    container_name: caddy
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - 80:80
+      - 433:433
+      - 443:443/udp
+    restart: unless-stopped
+    volumes:
+      - caddy-config:/config
+      - caddy-data:/data
+      - ./Caddyfile:/etc/caddy/Caddyfile
+    networks:
+      - docusecure
+    profiles:
+      - caddy
+
 networks:
-  default:
-    driver: bridge
+  docusecure:
+    name: docusecure
 
 volumes:
   es:
+  caddy-config:
+  caddy-data:
+  letsencrypt:
+    name: letsencrypt
