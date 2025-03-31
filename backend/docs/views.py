@@ -101,15 +101,4 @@ def delete(request, id):
 def save_file(file, user):
     logger = getLogger("loggers")
     logger.info({"message": "saving the document", "file": file})
-    doc = Doc(
-        file=file,
-        filename=file.name,
-        size=file.size,
-        owner=user,
-        mimetype=file.content_type,
-    )
-    doc.save()
-    doc.set_file_metadata()
-    doc.set_content_from_file()
-    doc.save()
-    return doc
+    return Doc.save_from_file_and_user(file, user)

@@ -54,6 +54,22 @@ class Doc(BaseModel):
             "keywords": self.keywords and self.keywords.split(","),
         }
 
+    def save_from_file_and_user(file, user):
+        doc = Doc()
+        doc.file = file
+        doc.filename = file.name
+        doc.size = file.size
+        doc.owner = user
+        doc.mimetype = file.content_type
+
+        # We'll need to save before setting the path and url
+        doc.save()
+
+        doc.set_file_metadata()
+        doc.set_content_from_file()
+        doc.save()
+        return doc
+
     def set_file_metadata(self):
         self.path = self.file.path
         self.url = self.file.url
