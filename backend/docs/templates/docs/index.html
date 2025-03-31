@@ -21,7 +21,6 @@ Secure Documents
   {% for doc in docs %}
   <li class="entry">
     <p>{{ doc.id }}</p>
-    <p>{{ doc.title }}</p>
     <pre>{{ doc.content }}</pre>
     <p>{{ doc.owner.username }}</p>
     <p><a href="{{ doc.url }}">{{ doc.filename }}</a> [{{ doc.mimetype }}] ({{ doc.size|filesizeformat }})</p>
