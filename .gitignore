@@ -1,6 +1,6 @@
 # `.env` files
 .env*
-.env.example!
+!.env.example
 
 # Cache
 __pycache__
@@ -16,4 +16,5 @@ node_modules
 
 # User input and logs
 backend/media
-backend/logs
+backend/logs/*
+!backend/logs/.gitkeep
