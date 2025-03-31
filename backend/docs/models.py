@@ -1,3 +1,6 @@
+import os
+from logging import getLogger
+
 import magic
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -44,6 +47,16 @@ class Doc(BaseModel):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
 
     _parser = None
+
+    def delete(self, using=None, keep_parents=False):
+        super().delete(using, keep_parents)
+        try:
+            os.unlink(self.path)
+        except FileNotFoundError:
+            logger = getLogger("loggers")
+            logger.warning(
+                {"message": "Couldn't find file to delete", "path": doc.path}
+            )
 
     def get_metadata(self):
         return {

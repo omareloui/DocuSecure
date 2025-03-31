@@ -87,13 +87,6 @@ def delete(request, id):
     logger.info(
         {"id": id, "action": "DELETE", "subject": "docs", "doc": doc, "file": doc.file}
     )
-
-    try:
-        os.unlink(doc.path)
-    except FileNotFoundError:
-        logger.warning({"message": "Couldn't find file to delete", "path": doc.path})
-        pass
-
     doc.delete()
     return redirect("docs")
 
