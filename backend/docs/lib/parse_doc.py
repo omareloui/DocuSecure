@@ -46,6 +46,14 @@ class FileParser:
         return self._parser.parse(path)
 
 
+def is_valid_mimetype(mimetype):
+    try:
+        get_parser_from_mimetype(mimetype)
+        return True
+    except:
+        return False
+
+
 def get_parser_from_mimetype(mimetype):
     match mimetype:
         case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":

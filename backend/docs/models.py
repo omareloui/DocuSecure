@@ -75,6 +75,9 @@ class Doc(BaseModel):
         doc.owner = user
         doc.mimetype = file.content_type
 
+        # To fail before saving the file and doc
+        get_parser_from_mimetype(doc.mimetype)
+
         # We'll need to save before setting the path and url
         doc.save()
 
