@@ -1,4 +1,9 @@
 :80 {
   reverse_proxy be:8000
   tls internal
+
+  handle_path /uploads/* {
+    root * /var/www/media/uploads
+    file_server
+  }
 }

@@ -107,6 +107,7 @@ services:
       - caddy-config:/config
       - caddy-data:/data
       - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./backend/media:/var/www/media
     networks:
       - docusecure
     profiles:
